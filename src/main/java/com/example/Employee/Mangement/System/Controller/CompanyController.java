@@ -19,10 +19,25 @@ public class CompanyController {
         return employee.toString();
     }
 
+    @GetMapping("/home")
+    public String homePage(){
+
+        return "home";
+    }
+
     @PostMapping("/createCompany")
     public String createNewCompany(@RequestBody Company newCompany){
            companyService.createCompany(newCompany);
            return newCompany.toString();
+    }
+
+    @GetMapping("/getEmployees")
+    public String getAllEmployees(@RequestParam String name){
+        return "s";
+    }
+    @GetMapping("/findCompany/{id}")
+    public String company(@PathVariable long id){
+        return companyService.findCompany(id).toString();
     }
 
 }

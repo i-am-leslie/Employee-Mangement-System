@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -33,10 +34,25 @@ public class CompanyService {
         newCompany.setName(c.getName());
         companyRepo.save(newCompany);
     }
-    public List<Company> findAllCompany(){
+    public  List<Company> findAllCompany(){
         Iterable<Company> listOfCompanies=companyRepo.findAll();
         return StreamSupport.stream(listOfCompanies.spliterator(), false)
                 .collect(Collectors.toList());
+    }
+    public  Company findCompany(Long id){
+        List<Company> companies=findAllCompany();
+        for(Company c : companies){
+           if (Objects.equals(c.getId(), id)){
+               return c;
+           }
+        }
+        return null;
+    }
+    public List<Employee> findAllEmployees(Long id){
+          Company c = findCompany(id);
+          Long companyId=c.getId();
+          employeeRepo.findById(companyId);
+          return null;
     }
 
 
