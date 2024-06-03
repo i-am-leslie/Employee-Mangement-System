@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -23,24 +24,27 @@ public class CompanyService {
     @Autowired
     private EmployeeRepo employeeRepo;
 
-    public void saveEmployee(long id,Employee newEmployee){
+    public String saveEmployee(long id,Employee newEmployee){
         Optional<Company> c=companyRepo.findById(id);
-        Company foundCompany=c.get();// need to add a check method dor this
-        foundCompany.addEmployee(newEmployee);
+        Company foundCompany=c.get();// need to add a check method dor thi
+        newEmployee.setCompany(foundCompany);
+        String addOrNot=foundCompany.addEmployee(newEmployee);
         companyRepo.save(foundCompany);
+        return addOrNot;
     }
     public  void createCompany(Company c){
         Company newCompany=new Company();
         newCompany.setName(c.getName());
         companyRepo.save(newCompany);
+        System.out.print(companyRepo.findAll());
     }
-    public  List<Company> findAllCompany(){
+    public  Set<Company> findAllCompany(){
         Iterable<Company> listOfCompanies=companyRepo.findAll();
         return StreamSupport.stream(listOfCompanies.spliterator(), false)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
     public  Company findCompany(Long id){
-        List<Company> companies=findAllCompany();
+        Set<Company> companies=findAllCompany();
         for(Company c : companies){
            if (Objects.equals(c.getId(), id)){
                return c;

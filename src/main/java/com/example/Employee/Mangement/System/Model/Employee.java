@@ -1,17 +1,15 @@
 package com.example.Employee.Mangement.System.Model;
 
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
+@ToString
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,16 +21,6 @@ public class Employee {
     @Column
     private String lastName;
 
-
-
     @ManyToOne
-    private  Company company;
-
-
-    @Override
-    public   String toString(){
-        return getId()+" "+getFirstName()+" "+getLastName()+" "+getCompany();
-    }
-
-
+    private Company company;
 }
