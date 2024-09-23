@@ -18,6 +18,7 @@ public class CompanyController {
 
 
     @PostMapping("/addEmployee/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public String addEmployeeToCompany( @PathVariable long id  ,@RequestBody Employee employee){
         return companyService.saveEmployee(id,employee);
     }
@@ -29,6 +30,7 @@ public class CompanyController {
     }
 
     @PostMapping("/createCompany")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> createNewCompany(@RequestBody Company newCompany){
         try {
             companyService.createCompany(newCompany);
